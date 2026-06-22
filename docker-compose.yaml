@@ -11,7 +11,7 @@ services:
     environment:
       API_URL: http://localhost:3000/
       
-  server:
+  rest-server:
     image: postgrest/postgrest
     ports:
       - "3000:3000"
@@ -21,6 +21,15 @@ services:
       PGRST_OPENAPI_SERVER_PROXY_URI: http://127.0.0.1:3000
     depends_on:
       - db
+  
+  mcps-server:
+    image: crystaldba/postgres-mcp
+    ports:
+      - "8000:8000" 
+    environment:
+      DATABASE_URI: postgresql://username:password@localhost:5432/dbname 
+      
+ #  --access-mode=unrestricted --transport=sse
   db:
     image: postgres
     ports:
